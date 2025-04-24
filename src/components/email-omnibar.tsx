@@ -8,7 +8,7 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 interface PropType {}
 const UploadOmniBar: FC<PropType> = () => {
 	return (
-		<div className="max-w-[690px] max-h-[428px] w-full h-full bg-white dark:bg-surface-card-dark rounded-xl border-[1px] border-brand-subtle/50 dark:border-border-subtle/30">
+		<div className="max-w-[690px] max-h-[380px] w-full h-full bg-white dark:bg-surface-card-dark rounded-xl border-[1px] border-brand-subtle/50 dark:border-border-subtle/30">
 			<Tabs defaultValue="file" className="w-full h-full p-5 lg:pt-7 lg:px-14">
 				<TabsList className="w-full border-b-border-subtle/40 border-b-[1px] bg-transparent border-solid rounded-none p-0">
 					<TabsTrigger value="file">File</TabsTrigger>
