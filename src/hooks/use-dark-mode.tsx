@@ -4,7 +4,9 @@ export const useDarkMode = (): [boolean, Dispatch<SetStateAction<boolean>>] => {
 	const [darkMode, setDarkMode] = useState<boolean>(() => {
 		return localStorage.getItem("mode") === "dark"
 			? true
-			: false || window.matchMedia("(prefers-color-scheme:dark)").matches;
+			: false ||
+					(window.matchMedia("(prefers-color-scheme:dark)").matches &&
+						!localStorage.key(0));
 	});
 
 	useEffect(() => {
