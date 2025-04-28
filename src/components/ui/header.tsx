@@ -10,7 +10,7 @@ interface PropType {}
 const Header: FC<PropType> = () => {
 	const [darkMode, setDarkMode] = useDarkMode();
 	return (
-		<header className="bg-brand-primary px-4 lg:px-24 py-4 flex items-center justify-between">
+		<header className="bg-brand-primary px-4 lg:px-24 py-4 flex items-center justify-between sticky top-0 z-10">
 			<div className="w-10 lg:w-14 aspect-square text-white">
 				<PhishookLogo iswhite />
 			</div>
