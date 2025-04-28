@@ -1,26 +1,129 @@
-import {FC} from "react";
+import {ChangeEvent, FC, useState} from "react";
 
-import {Button} from "@/components/ui/button";
+import {X} from "lucide-react";
+import {useNavigate} from "react-router";
+
+import {Button} from "./ui/button";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface PropType {}
 const UploadEmail: FC<PropType> = () => {
+	const navigate = useNavigate();
+	const [emailFile, setEmailFile] = useState<File | null>(null);
+	const [error, setError] = useState<string>("");
+	const [progress, setProgress] = useState<number>(0);
+
+	const handleEmailFile = (event: ChangeEvent<HTMLInputElement>) => {
+		setError("");
+		setEmailFile(null);
+		setProgress(0);
+		const files = event.target.files;
+		if (files && files[0].name.endsWith(".eml")) {
+			const file = files[0];
+			const formData = new FormData();
+			formData.append("as_file", file);
+
+			if (file.size / 100 > 50) {
+				// limit email size at 50KB
+				setError("Max file size allowed is 50KB");
+			} else setEmailFile(file);
+		} else {
+			setError("Select email file to analyze");
+		}
+	};
+
+	const handleUpload = () => {
+		if (!emailFile) {
+			setError("Select a .eml file to analyze");
+			return;
+		}
+
+		const formData = new FormData();
+		formData.append("as_file", emailFile);
+		try {
+			navigate("/verdict", {state: {formData}});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	return (
 		<div className="flex flex-col justify-evenly h-full gap-6 py-4">
 			<div className="flex flex-col items-center gap-3">
 				<p className="text-xs lg:text-sm text-surface-primary dark:text-brand-body max-w-prose text-center">
-					Select a .eml file to scan for threats
+					{emailFile
+						? "Your selected email file"
+						: "Select a .eml file to scan for threats"}
 				</p>
-
-				<img
-					src="/scan-icon.svg"
-					alt="A page scanning with fingerprint icon"
-					className="w-30"
-				/>
+				{emailFile ? (
+					<>
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger className="rounded-2xl">
+									<div
+										onClick={() => setEmailFile(null)}
+										className="border-[1px] border-solid border-border-subtle bg-transparent text-brand-light inset-shadow-sm inset-shadow-brand-light/20 hover:bg-transparent hover:text-brand-subtle hover:border-brand-subtle/60 rounded-lg flex items-center py-1 px-2 gap-1"
+									>
+										<p className="truncate max-w-32">{emailFile.name}</p>
+										<X className="scale-60" />
+									</div>
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Clear selection</p>
+								</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+					</>
+				) : (
+					<img
+						src="/scan-icon.svg"
+						alt="A page scanning with fingerprint icon"
+						className="w-30"
+					/>
+				)}
 			</div>
 			<div className="flex flex-col items-center gap-4">
-				<Button className="bg-brand-primary text-subtle-light px-12 py-6 hover:bg-border-subtle font-medium cursor-pointer rounded-lg inset-shadow-xs inset-shadow-blue-200">
-					Choose File
-				</Button>
+				{emailFile ? (
+					<>
+						{progress > 0 && (
+							<progress
+								className="w-40 h-1 rounded-full"
+								value={progress}
+								max={100}
+							></progress>
+						)}
+						<Button
+							onClick={handleUpload}
+							className="bg-brand-primary text-subtle-light px-12 py-6 hover:bg-border-subtle font-medium cursor-pointer rounded-lg inset-shadow-xs inset-shadow-blue-200"
+						>
+							{progress > 0 ? `Uploading... ${progress}%` : "Confirm Upload"}
+						</Button>
+					</>
+				) : (
+					<>
+						{error && (
+							<p className="text-sm text-red-500 dark:text-red-400">{error}</p>
+						)}
+						<input
+							type="file"
+							accept=".eml"
+							name="file"
+							id="file"
+							className="hidden"
+							onChange={handleEmailFile}
+						/>
+						<label
+							htmlFor="file"
+							className="bg-brand-primary text-subtle-light px-12 py-3 hover:bg-border-subtle font-medium cursor-pointer rounded-lg inset-shadow-xs inset-shadow-blue-200"
+						>
+							Choose File
+						</label>
+					</>
+				)}
 				<p className="text-xs lg:text-sm text-surface-primary dark:text-brand-body max-w-[24ch] text-center">
 					By continuing you agree to our Terms of Use
 				</p>
