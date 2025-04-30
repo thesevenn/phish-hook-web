@@ -14,13 +14,13 @@ const Footer: FC<PropType> = () => {
 					</div>
 					<p className="md:text-xl font-medium">PhisHook</p>
 				</div>
-				<ul className="flex flex-col md:flex-row md:items-center gap-5 md:gap-10">
+				<ul className="flex flex-col md:flex-row md:items-center gap-5 md:gap-10 text-sm">
 					<li>Disclaimer</li>
 					<li>See it in action</li>
 				</ul>
 			</div>
 			<Separator />
-			<div className="flex items-center justify-between pt-4">
+			<div className="flex items-center justify-between pt-4 text-sm">
 				<p>Built by Sevenn</p>
 				<p>Source code - GitHub</p>
 			</div>
