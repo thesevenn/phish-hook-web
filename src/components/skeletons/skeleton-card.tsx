@@ -7,7 +7,7 @@ const SkeletonCard: FC<PropType> = ({className, children}) => {
 	return (
 		<div
 			className={cn(
-				"dark:bg-surface-card-dark bg-white max-w-[690px] max-h-[380px] w-full h-full rounded-xl animate-pulse",
+				"dark:bg-ring-default bg-slate-200 max-w-[690px] max-h-[380px] w-full h-full rounded-xl animate-pulse",
 				className
 			)}
 		>
