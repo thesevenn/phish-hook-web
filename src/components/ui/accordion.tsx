@@ -39,9 +39,9 @@ function AccordionTrigger({className, children, hint, ...props}: PropType) {
 				{...props}
 			>
 				{children}
-				<div className="flex items-center gap-2">
+				<div className="flex items-center gap-2 leading-0">
 					{hint && (
-						<p className="text-sm text-surface-primary dark:text-brand-body ">
+						<p className="text-sm text-surface-primary dark:text-brand-body font-normal">
 							{hint}
 						</p>
 					)}
