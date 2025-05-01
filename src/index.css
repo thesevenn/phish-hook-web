@@ -20,6 +20,11 @@
 
 	--color-status-success: #2ecc71;
 	--color-progress-complete: #75e0a3;
+
+	--color-critical: #e74c3c;
+	--color-suspicious: #e67e22;
+	--color-caution: #f1c40f;
+	--color-safe: #2ecc71;
 }
 
 @custom-variant dark (&:is(.dark *));
