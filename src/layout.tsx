@@ -9,11 +9,11 @@ import Footer from "./components/ui/footer";
 interface PropType {}
 const Layout: FC<PropType> = () => {
 	return (
-		<div className="font-rubik bg-brand-body dark:bg-surface-primary transition-colors">
+		<div className="font-rubik bg-brand-body dark:bg-surface-primary transition-all">
 			<Header />
 			<Toaster />
 			<main
-				style={{height: "calc(100vh - 140px)"}}
+				style={{minHeight: "calc(100vh - 140px)"}}
 				className="flex flex-col items-center justify-center mb-6 mt-10 px-2"
 			>
 				<Outlet />
