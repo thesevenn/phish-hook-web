@@ -1,10 +1,35 @@
 import {Dispatch, SetStateAction} from "react";
+import {AnalysisResponseType} from "./types/results.type";
 
 const getApiStatus = async () => {
-	const response = await fetch("https://api-phishook.onrender.com/api/status");
+	const response = await fetch(`${import.meta.env.VITE_API_URL}/api/status`);
 	return response;
 };
 
+const uploadFileAnalyze = async (
+	formData: FormData
+): Promise<AnalysisResponseType | null> => {
+	// await new Promise(resolve => setTimeout(resolve, 3000));
+	try {
+		const response = await fetch(
+			`${import.meta.env.VITE_API_URL}/api/analyze`,
+			{
+				method: "POST",
+				headers: {
+					"X-API-KEY": import.meta.env.VITE_API_KEY,
+					"Access-Allow-Origin": import.meta.env.VITE_API_URL,
+				},
+				body: formData,
+			}
+		);
+		return response.json();
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+};
+
+// with progress when file are larger
 const analyzeEmail = async (
 	path: string,
 	formData: FormData,
@@ -24,7 +49,7 @@ const analyzeEmail = async (
 		xhr.open("POST", `${import.meta.env.VITE_API_URL}${path}`);
 		xhr.responseType = "json";
 		xhr.setRequestHeader("X-API-KEY", import.meta.env.VITE_API_KEY);
-		xhr.setRequestHeader("Access-Allow-Origin", "http://localhost:8000");
+		xhr.setRequestHeader("Access-Allow-Origin", import.meta.env.VITE_API_URL);
 		xhr.onload = () => {
 			if (xhr.status == 200) {
 				// reject(xhr);
@@ -46,4 +71,4 @@ const analyzeEmail = async (
 	return promise;
 };
 
-export {getApiStatus, analyzeEmail};
+export {getApiStatus, analyzeEmail, uploadFileAnalyze};
