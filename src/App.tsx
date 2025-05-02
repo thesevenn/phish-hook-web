@@ -1,10 +1,9 @@
 import PhishookLogo from "./components/shared/phishook";
-
-import {useDarkMode} from "./hooks/use-dark-mode";
+import {useDarkModeContext} from "./contexts/darkmode-context";
 import UploadOmniBar from "./components/email-omnibar";
 
 function App() {
-	const [darkMode] = useDarkMode();
+	const {darkMode} = useDarkModeContext();
 	return (
 		<>
 			<div className="flex items-center gap-2 lg:gap-4">
