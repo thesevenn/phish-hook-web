@@ -25,6 +25,7 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import VerdictSheild from "./shared/verdict-shield";
+import {Separator} from "./ui/separator";
 
 interface PropType {}
 const Verdict: FC<PropType> = () => {
@@ -187,7 +188,14 @@ const Verdict: FC<PropType> = () => {
 								label={filter.name}
 								key={filter.name}
 								numOfClues={filter.clues.length || 0}
-								content={filter.name}
+								content={
+									<FeatureResultDetail
+										key={filter.name}
+										preview={filter.preview}
+										clues={filter.clues}
+										name={filter.name}
+									/>
+								}
 							/>
 						);
 					} else {
@@ -230,7 +238,10 @@ const FeatureResult: FC<propType> = ({label, content, numOfClues}) => {
 				>
 					{titleCase(label)}
 				</AccordionTrigger>
-				<AccordionContent>{content}</AccordionContent>
+				<AccordionContent>
+					<Separator />
+					{content}
+				</AccordionContent>
 			</AccordionItem>
 		</Accordion>
 	);
@@ -298,9 +309,54 @@ const ActionButtons: FC<{confidence?: number}> = ({confidence}) => {
 	);
 };
 
+const FeatureResultDetail: FC<{
+	clues: Array<{[key: string]: string}>;
+	preview: string;
+	name: string;
+}> = ({clues, preview, name}) => {
+	return (
+		<div className="py-2">
+			<dl className="">
+				<dt className="bg-surface-card-dark text-subtle-light px-2 py-1 rounded-md inline-block">
+					Preview: {titleCase(name)}
+				</dt>
+				<dd>
+					{preview}
+					{name == "body" && "..."}
+				</dd>
+			</dl>
+			<Separator className="mt-2" />
+			<div className="py-2">
+				<p>We found these suspicious items in {name}</p>
+				<Separator className="my-2" />
+				{clues.map(clue => {
+					const formattedClue = formatClue(clue);
+					return (
+						<dl className="pb-2">
+							<dt className="bg-surface-card-dark text-subtle-light p-1 rounded-md inline-block">
+								{formattedClue[0]}
+							</dt>
+							<dd className="inline pl-2 text-surface-primary dark:text-brand-subtle">
+								{formattedClue[1]}
+							</dd>
+						</dl>
+					);
+				})}
+			</div>
+		</div>
+	);
+};
+
 const mapFeaturesFilter = (filter: string, features: Array<string>) => {
 	if (features.includes(filter)) {
 		features.splice(features.indexOf(filter), 1);
 		return true;
 	} else return false;
+};
+
+const formatClue = (clue: {[key: string]: string}) => {
+	const [key, value] = Object.entries(clue)[0];
+	const tokens = key.split("_");
+	tokens[0] = titleCase(tokens[0]);
+	return [tokens.join(" "), value];
 };
