@@ -1,6 +1,6 @@
 import {ChangeEvent, FC, useState} from "react";
 
-import {X} from "lucide-react";
+import {X, FileScan} from "lucide-react";
 import {useNavigate} from "react-router";
 
 import {Button} from "./ui/button";
@@ -52,7 +52,7 @@ const UploadEmail: FC<PropType> = () => {
 		}
 	};
 	return (
-		<div className="flex flex-col justify-evenly h-full gap-6 py-4">
+		<div className="flex flex-col justify-evenly gap-6 pt-4 min-h-[256px]">
 			<div className="flex flex-col items-center gap-3">
 				<p className="text-xs lg:text-sm text-surface-primary dark:text-brand-body max-w-prose text-center">
 					{emailFile
@@ -63,10 +63,15 @@ const UploadEmail: FC<PropType> = () => {
 					<>
 						<TooltipProvider>
 							<Tooltip>
-								<TooltipTrigger className="rounded-2xl">
+								<TooltipTrigger className="rounded-2xl flex flex-col items-center gap-2">
+									<FileScan
+										size={56}
+										strokeWidth={1.5}
+										className="text-brand-muted"
+									/>
 									<div
 										onClick={() => setEmailFile(null)}
-										className="border-[1px] border-solid border-border-subtle bg-transparent text-brand-light inset-shadow-sm inset-shadow-brand-light/20 hover:bg-transparent hover:text-brand-subtle hover:border-brand-subtle/60 rounded-lg flex items-center py-1 px-2 gap-1"
+										className="border-[1px] border-solid border-border-subtle bg-transparent text-brand-light inset-shadow-sm inset-shadow-brand-light/20 hover:bg-transparent hover:text-brand-subtle hover:border-brand-subtle/60 rounded-lg flex items-center py-1 px-2 gap-1 "
 									>
 										<p className="truncate max-w-32">{emailFile.name}</p>
 										<X className="scale-60" />
