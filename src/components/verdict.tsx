@@ -1,4 +1,4 @@
-import {FC, useState, useEffect, useRef} from "react";
+import {FC, useState, useEffect} from "react";
 
 import {
 	FileWarning,
@@ -26,16 +26,16 @@ import {
 } from "@/components/ui/accordion";
 import VerdictSheild from "./shared/verdict-shield";
 import {Separator} from "./ui/separator";
+import {useDarkModeContext} from "@/contexts/darkmode-context";
 
 interface PropType {}
 const Verdict: FC<PropType> = () => {
+	const {darkMode} = useDarkModeContext();
 	const location = useLocation();
 	const formData = location.state?.formData;
 	const features = ["sender", "subject", "body", "urls"];
 	const [timeElapsed, setTimeElapsed] = useState<number>(0.0);
-	const ref = useRef<number>(0);
-	ref.current += 1;
-	console.log(ref.current);
+
 	const {data, isLoading, isFetching} = useQuery({
 		queryKey: ["analysis"],
 		queryFn: () => uploadFileAnalyze(formData),
@@ -58,7 +58,7 @@ const Verdict: FC<PropType> = () => {
 	if (!formData) {
 		return (
 			<>
-				<Card className="flex flex-col items-center justify-center gap-2">
+				<Card className="flex flex-col items-center justify-center gap-2 h-[300px]">
 					<FileWarning
 						className="dark:text-red-400 text-red-500"
 						size={72}
@@ -113,8 +113,12 @@ const Verdict: FC<PropType> = () => {
 							>
 								{data?.result?.score}
 							</p>
-							<span className="text-sm">/100</span>
-							<p className="text-xs">Threat Score</p>
+							<span className="text-sm text-surface-primary dark:text-brand-body">
+								/100
+							</span>
+							<p className="text-xs text-surface-primary dark:text-brand-body font-medium">
+								Threat Score
+							</p>
 						</div>
 					) : (
 						<p
@@ -160,8 +164,12 @@ const Verdict: FC<PropType> = () => {
 							Analysis complete in {timeElapsed}s{" "}
 							<CheckCircle2
 								size={24}
-								fill="var(--color-brand-light)"
-								className="text-surface-card-dark"
+								fill={
+									darkMode
+										? "var(--color-brand-light)"
+										: "var(--color-brand-primary)"
+								}
+								className="dark:text-surface-card-dark text-white"
 							/>
 						</p>
 						<p className="text-sm lg:text-base text-surface-primary dark:text-brand-body max-w-[44ch] text-center ">
@@ -229,17 +237,17 @@ const FeatureResult: FC<propType> = ({label, content, numOfClues}) => {
 		<Accordion
 			type="single"
 			collapsible
-			className="px-4 dark:bg-ring-default bg-slate-200 rounded-xl"
+			className="px-4 dark:bg-ring-default bg-subtle-light rounded-xl"
 		>
 			<AccordionItem value="item-1">
 				<AccordionTrigger
 					hint={`${numOfClues} Issue${numOfClues > 1 ? "s" : ""} found`}
-					className="text-sm text-surface-primary dark:text-brand-subtle font-normal"
+					className="text-sm text-surface-primary dark:text-brand-body font-normal"
 				>
 					{titleCase(label)}
 				</AccordionTrigger>
 				<AccordionContent>
-					<Separator />
+					<Separator className="bg-gray-300 dark:bg-gray-700" />
 					{content}
 				</AccordionContent>
 			</AccordionItem>
@@ -249,13 +257,15 @@ const FeatureResult: FC<propType> = ({label, content, numOfClues}) => {
 
 const FeatureAnalysisClean: FC<{label: string}> = ({label}) => {
 	return (
-		<div className="dark:bg-ring-default bg-slate-200 rounded-xl px-4 py-4 flex w-full justify-between items-center">
-			<p className="text-sm text-surface-primary dark:text-brand-subtle max-w-prose ">
+		<div className="dark:bg-ring-default bg-subtle-light rounded-xl px-4 py-4 flex w-full justify-between items-center">
+			<p className="text-sm text-surface-primary dark:text-brand-body max-w-prose ">
 				{titleCase(label)}
 			</p>
 			<p className="flex items-center gap-2 leading-0">
 				<CircleCheck size={20} className="text-status-success" />
-				<span className="text-xs">CLEAN</span>{" "}
+				<span className="text-xs text-border-subtle dark:text-brand-muted">
+					CLEAN
+				</span>{" "}
 			</p>
 		</div>
 	);
@@ -317,26 +327,28 @@ const FeatureResultDetail: FC<{
 	return (
 		<div className="py-2">
 			<dl className="">
-				<dt className="bg-surface-card-dark text-subtle-light px-2 py-1 rounded-md inline-block">
+				<dt className="dark:bg-surface-card-dark bg-brand-subtle text-surface-primary dark:text-subtle-light px-2 py-1 rounded-md inline-block">
 					Preview: {titleCase(name)}
 				</dt>
-				<dd>
+				<dd className="text-border-subtle dark:text-brand-subtle ">
 					{preview}
 					{name == "body" && "..."}
 				</dd>
 			</dl>
-			<Separator className="mt-2" />
+			<Separator className="mt-2 bg-gray-300 dark:bg-gray-700" />
 			<div className="py-2">
-				<p>We found these suspicious items in {name}</p>
-				<Separator className="my-2" />
+				<p className="text-surface-primary  dark:text-subtle-light">
+					We found these suspicious items in {name}
+				</p>
+				<Separator className="my-2 bg-gray-300 dark:bg-gray-700" />
 				{clues.map(clue => {
 					const formattedClue = formatClue(clue);
 					return (
 						<dl className="pb-2">
-							<dt className="bg-surface-card-dark text-subtle-light p-1 rounded-md inline-block">
+							<dt className="dark:bg-surface-card-dark bg-brand-subtle text-surface-primary dark:text-subtle-light p-1 rounded-md inline-block">
 								{formattedClue[0]}
 							</dt>
-							<dd className="inline pl-2 text-surface-primary dark:text-brand-subtle">
+							<dd className="inline pl-2 text-border-subtle dark:text-brand-subtle">
 								{formattedClue[1]}
 							</dd>
 						</dl>
