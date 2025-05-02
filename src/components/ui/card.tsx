@@ -7,7 +7,7 @@ const Card: FC<PropType> = ({className, children}) => {
 	return (
 		<div
 			className={cn(
-				"dark:bg-surface-card-dark bg-white max-w-[690px] max-h-[380px] w-full h-full rounded-xl",
+				"dark:bg-surface-card-dark bg-white max-w-[690px] w-full h-full rounded-xl transition-all",
 				className
 			)}
 		>
