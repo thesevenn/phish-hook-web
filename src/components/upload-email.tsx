@@ -10,6 +10,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import ScanIcon from "./shared/scan-icon";
 
 interface PropType {}
 const UploadEmail: FC<PropType> = () => {
@@ -84,11 +85,7 @@ const UploadEmail: FC<PropType> = () => {
 						</TooltipProvider>
 					</>
 				) : (
-					<img
-						src="/scan-icon.svg"
-						alt="A page scanning with fingerprint icon"
-						className="w-30"
-					/>
+					<ScanIcon />
 				)}
 			</div>
 			<div className="flex flex-col items-center gap-4">
