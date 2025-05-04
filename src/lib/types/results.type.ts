@@ -1,20 +1,22 @@
 export interface AnalysisResponseType {
 	filename: string;
 	email_size: string;
-	result: AnalysisResult;
+	result: AnalysisResultType;
 }
 
 export type VerdictType = "safe" | "caution" | "suspicious" | "critical";
-interface AnalysisResult {
+
+export interface AnalysisResultType {
 	verdict: VerdictType;
 	score: number;
 	confidence: number;
-	filters: RiskAssessment[];
+	filters: RiskAssessmentType[];
 	critical: unknown[];
 }
 
-interface RiskAssessment {
+interface RiskAssessmentType {
 	name: string;
 	preview: string;
 	clues: Record<string, string>[];
+	type: string;
 }

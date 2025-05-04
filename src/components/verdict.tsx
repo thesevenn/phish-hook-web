@@ -13,20 +13,29 @@ import {useLocation, Link} from "react-router";
 import {useQuery} from "@tanstack/react-query";
 
 import Card from "./ui/card";
-import SkeletonCard from "./skeletons/skeleton-card";
-import ProgressSpinner from "./progress-spinner";
+import {Separator} from "./ui/separator";
 import {uploadFileAnalyze} from "@/lib/api";
-import {mapColorToVerdict, titleCase, formatReadableVerdict} from "@/lib/utils";
 import HintedIcon from "./shared/hinted-icon";
+import ProgressSpinner from "./progress-spinner";
+import {useDownload} from "@/hooks/use-download";
+import VerdictSheild from "./shared/verdict-shield";
+import SkeletonCard from "./skeletons/skeleton-card";
+import {useDarkModeContext} from "@/contexts/darkmode-context";
+import {
+	mapColorToVerdict,
+	titleCase,
+	formatReadableVerdict,
+	formatClue,
+	mapFeaturesFilter,
+	formatPrintableReport,
+	createStringURI,
+} from "@/lib/utils";
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import VerdictSheild from "./shared/verdict-shield";
-import {Separator} from "./ui/separator";
-import {useDarkModeContext} from "@/contexts/darkmode-context";
 
 interface PropType {}
 const Verdict: FC<PropType> = () => {
@@ -36,15 +45,22 @@ const Verdict: FC<PropType> = () => {
 	const features = ["sender", "subject", "body", "urls"];
 	const [timeElapsed, setTimeElapsed] = useState<number>(0.0);
 
+	const reportDownloader = useDownload({
+		dataHandler: createStringURI,
+		filename: "phishook-analysis-report.txt",
+	});
+
 	const {data, isLoading, isFetching} = useQuery({
 		queryKey: ["analysis"],
 		queryFn: () => uploadFileAnalyze(formData),
 	});
+
 	useEffect(() => {
 		if (!isFetching) {
 			return;
 		}
 
+		// timer - tracking rough estimate for analysis
 		const start = Date.now();
 
 		const interval = setInterval(() => {
@@ -99,7 +115,10 @@ const Verdict: FC<PropType> = () => {
 	return (
 		<>
 			<Card className="flex flex-col items-center p-4 lg:p-8 h-auto max-h-auto">
-				<ActionButtons confidence={data?.result?.confidence} />
+				<ActionButtons
+					trigger={() => reportDownloader(formatPrintableReport(data?.result))}
+					confidence={data?.result?.confidence}
+				/>
 
 				<div className="relative w-full flex items-center justify-center mt-6">
 					{data ? (
@@ -271,7 +290,10 @@ const FeatureAnalysisClean: FC<{label: string}> = ({label}) => {
 	);
 };
 
-const ActionButtons: FC<{confidence?: number}> = ({confidence}) => {
+const ActionButtons: FC<{confidence?: number; trigger: () => void}> = ({
+	confidence,
+	trigger,
+}) => {
 	return (
 		<div className="flex items-center justify-between w-full">
 			{confidence ? (
@@ -293,6 +315,7 @@ const ActionButtons: FC<{confidence?: number}> = ({confidence}) => {
 						hint="Download report"
 						icon={
 							<Download
+								onClick={trigger}
 								size={24}
 								className="dark:text-brand-subtle text-border-subtle"
 							/>
@@ -357,18 +380,4 @@ const FeatureResultDetail: FC<{
 			</div>
 		</div>
 	);
-};
-
-const mapFeaturesFilter = (filter: string, features: Array<string>) => {
-	if (features.includes(filter)) {
-		features.splice(features.indexOf(filter), 1);
-		return true;
-	} else return false;
-};
-
-const formatClue = (clue: {[key: string]: string}) => {
-	const [key, value] = Object.entries(clue)[0];
-	const tokens = key.split("_");
-	tokens[0] = titleCase(tokens[0]);
-	return [tokens.join(" "), value];
 };
