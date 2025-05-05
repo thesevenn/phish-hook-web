@@ -6,7 +6,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 import "./index.css";
 import App from "./App.tsx";
-import Verdict from "./components/verdict.tsx";
+import Verdict from "./components/verdict/verdict.tsx";
 import Layout from "./layout.tsx";
 import {Tooltip} from "@/components/ui/tooltip";
 import {DarkModeProvider} from "./contexts/darkmode-context.tsx";
