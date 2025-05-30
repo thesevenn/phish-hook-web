@@ -1,5 +1,7 @@
 import {FC} from "react";
 
+import {Link} from "react-router";
+
 import {Separator} from "@/components/ui/separator";
 import PhishookLogo from "../shared/phishook";
 import {
@@ -54,8 +56,13 @@ const Footer: FC<PropType> = () => {
 			</div>
 			<Separator />
 			<div className="flex items-center justify-between pt-4 text-sm">
-				<p>Built by Sevenn</p>
-				<p>Source code - GitHub</p>
+				<p>
+					Built by <Link to="https://www.linkedin.com/in/adityart">Sevenn</Link>
+				</p>
+				<p>
+					Source code -{" "}
+					<Link to="https://github.com/thesevenn/phish-hook-web">GitHub</Link>
+				</p>
 			</div>
 		</footer>
 	);
