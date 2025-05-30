@@ -38,16 +38,16 @@ const UploadEmail: FC<PropType> = () => {
 		}
 	};
 
-	const handleUpload = () => {
+	const handleUpload = async () => {
 		if (!emailFile) {
 			setError("Select a .eml file to analyze");
 			return;
 		}
 
-		const formData = new FormData();
-		formData.append("as_file", emailFile);
+		// const formData = new FormData();
+		// formData.append("as_file", emailFile);
 		try {
-			navigate("/verdict", {state: {formData}});
+			navigate("/verdict", {state: {file: emailFile}});
 		} catch (error) {
 			console.log(error);
 		}

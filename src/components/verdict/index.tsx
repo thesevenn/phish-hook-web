@@ -30,7 +30,7 @@ interface PropType {}
 const Verdict: FC<PropType> = () => {
 	const {darkMode} = useDarkModeContext();
 	const location = useLocation();
-	const formData = location.state?.formData;
+	const emailFile = location.state?.file;
 	const features = ["sender", "subject", "body", "urls"];
 	const [timeElapsed, setTimeElapsed] = useState<number>(0.0);
 
@@ -39,9 +39,14 @@ const Verdict: FC<PropType> = () => {
 		filename: "phishook-analysis-report.txt",
 	});
 
+	const handleFormData = async (file: File) => {
+		const formData = new FormData();
+		formData.append("as_file", file);
+		return uploadFileAnalyze(formData);
+	};
 	const {data, isLoading, isFetching} = useQuery({
 		queryKey: ["analysis"],
-		queryFn: () => uploadFileAnalyze(formData),
+		queryFn: () => handleFormData(emailFile),
 	});
 
 	useEffect(() => {
@@ -60,7 +65,7 @@ const Verdict: FC<PropType> = () => {
 		return () => clearInterval(interval);
 	}, [isFetching]);
 
-	if (!formData) {
+	if (!emailFile) {
 		return (
 			<>
 				<Card className="flex flex-col items-center justify-center gap-2 h-[300px]">

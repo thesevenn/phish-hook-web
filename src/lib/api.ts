@@ -3,7 +3,7 @@ import {AnalysisResponseType} from "./types/results.type";
 
 const getApiStatus = async () => {
 	const response = await fetch(`${import.meta.env.VITE_API_URL}/api/status`, {
-		headers: {"Access-Allow-Origin": import.meta.env.VITE_API_URL},
+		// headers: {"Access-Allow-Origin": import.meta.env.VITE_API_URL},
 	});
 	return response;
 };
@@ -19,7 +19,7 @@ const uploadFileAnalyze = async (
 				method: "POST",
 				headers: {
 					"X-API-KEY": import.meta.env.VITE_API_KEY,
-					"Access-Allow-Origin": import.meta.env.VITE_API_URL,
+					// "Access-Allow-Origin": import.meta.env.VITE_API_URL,
 				},
 				body: formData,
 			}
