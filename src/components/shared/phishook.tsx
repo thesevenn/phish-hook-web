@@ -9,8 +9,8 @@ type OnWhite = {
 	onlight?: never;
 };
 type PropType = OnLight | OnWhite;
-const PhishookLogo: FC<PropType> = ({onlight, iswhite}) => {
-	const fillColor = iswhite ? "#ffffff" : onlight ? "#214BA6" : "#7296E3";
+const PhishookLogo: FC<PropType> = () => {
+	// const fillColor = iswhite ? "#ffffff" : onlight ? "#214BA6" : "#7296E3";
 	return (
 		<svg
 			width="100%"
