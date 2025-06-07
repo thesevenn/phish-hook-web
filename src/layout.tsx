@@ -3,7 +3,6 @@ import {FC} from "react";
 import {Outlet} from "react-router";
 
 import Header from "./components/ui/header";
-import Toaster from "./components/ui/toaster";
 import Footer from "./components/ui/footer";
 
 interface PropType {}
@@ -11,7 +10,6 @@ const Layout: FC<PropType> = () => {
 	return (
 		<div className="font-rubik bg-brand-body dark:bg-surface-primary transition-all">
 			<Header />
-			<Toaster />
 			<main
 				style={{minHeight: "calc(100vh - 140px)"}}
 				className="flex flex-col items-center justify-center mb-6 mt-10 px-2"
