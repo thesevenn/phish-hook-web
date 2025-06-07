@@ -2,7 +2,7 @@
 
 <div align="center"><h1>Phishook - Phishing Email Detection</h1></div>
 
-A lightweight phishing email detection system using rule filters and ML techniques. This user-facing web application lets the users interact with the 🔗 [Phishook Detection System](https://github.com/phishook-api.git) API built with Python + FastAPI. Users can upload an email and receive an instant analysis.
+A lightweight phishing email detection system using rule filters and ML techniques. This user-facing web application lets the users interact with the 🔗 [Phishook Detection System](https://github.com/thesevenn/phishook-api.git) API built with Python + FastAPI. Users can upload an email and receive an instant analysis.
 
 ![Phishook Demo GIF showing an email scan and verdict](./docs/critical-demo.gif)
 
@@ -12,7 +12,7 @@ A lightweight phishing email detection system using rule filters and ML techniqu
 
 Built with React and TailwindCSS, the Phishook web client offers a streamlined UI for interacting with the detection API — no setup needed. Just upload an email file and get instant analysis with visual verdicts.
 
-👉 Try it yourself at - 🔗 [**Phishook Web**](https://phishook.app.render)
+👉 Try it yourself at - 🔗 [**Phishook Web**](https://phishook.netlify.app)
 
 Learn more about the detection system by visiting the GitHub repo of the Phishook API above
 or 🔗 [here](https://github.com/thesevenn/phishook-api.git).
@@ -45,8 +45,8 @@ This system is a Proof of Concept for the research paper I wrote on **Hybrid Seq
 
 ### 🎯 Accuracy
 
-- Overall system accuracy: 94.6% (_combined Rule Filters + ML inference_)
-- Rule-based filter accuracy: 91.7% (_Assuming uncertain cases are treated as incorrect_)
+- Overall system accuracy: 93.6% (_combined Rule Filters + ML inference_)
+- Rule-based filter accuracy: 91.7% (\_Assuming uncertain cases are treated as incorrect)
 - ML model accuracy:
   - Email classifier: 99.9% (_trained and tested on a dataset of 40,000 emails_)
   - URL classifier: 91.3% (_trained and tested on 11,000+ URLs_)
@@ -59,7 +59,7 @@ This system is a Proof of Concept for the research paper I wrote on **Hybrid Seq
 - Average ML inference time: 15ms (_Email + URL classifiers combined_)
 
 > [!Note]
-> Response time can vary depending on server cold starts and Render tier limitations.
+> Response time can vary depending on server cold starts and [Render](https://render.com/pricing) tier limitations.
 
 ## 🪫 Limitations
 
@@ -95,18 +95,16 @@ The React application was bootstrapped using VITE and pnpm.
 git clone repo
 cd ./repo
 pnpm install
+# or
+npm install
 ```
 
 To run the application locally -
 
-```
-pnpm dev
-```
-
-or
-
-```
+```bash
 pnpm run dev
+# or
+npm run dev
 ```
 
 ## 📢 Disclaimer
