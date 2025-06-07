@@ -29,7 +29,7 @@ const UploadEmail: FC<PropType> = () => {
 			const formData = new FormData();
 			formData.append("as_file", file);
 
-			if (file.size / 100 > 50) {
+			if (file.size / 1000 > 50) {
 				// limit email size at 50KB
 				setError("Max file size allowed is 50KB");
 			} else setEmailFile(file);
