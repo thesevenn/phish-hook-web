@@ -20,8 +20,8 @@ createRoot(document.getElementById("root")!).render(
 					<BrowserRouter>
 						<Routes>
 							<Route element={<Layout />}>
-								<Route path="/" element={<Navigate to="/upload" />} />
 								<Route index path="/upload" element={<App />} />
+								<Route path="/" element={<Navigate to="/upload" />} />
 								<Route path="/verdict" element={<Verdict />} />
 							</Route>
 						</Routes>
