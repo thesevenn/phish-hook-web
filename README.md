@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/Python-ML-orange?logo=python&logoColor=white" />
 </p>
 
-A lightweight phishing email detection system using rule filters and ML techniques. Users can upload an email and receive an instant analysis using 🔗 [Phishook Detection](https://github.com/thesevenn/phishook-api.git) API built with Python + FastAPI.
+A lightweight phishing email detection system using rule filters and ML techniques. Users can upload an email and receive an instant analysis using 🔗 [Phishook Detection API](https://github.com/thesevenn/phishook-api.git) built with Python + FastAPI.
 
 ![Phishook Demo GIF showing an email scan and verdict](./docs/critical-demo.gif)
 
@@ -166,15 +166,6 @@ This project is not an enterprise-grade detection system. It’s an academic pro
 
 This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)** license.
 
-You're free to:
-
-- Share — copy and redistribute the material in any medium or format
-- Adapt — improve, transform, and build upon the material
-
-**Under the following terms**:
-
-- **Attribution** — You must give appropriate credit.
-- **NonCommercial** — You may not use the material for commercial purposes.
-- **No Brand Misuse** — The name “Phishook” may not be used to endorse or promote derived works.
-
 📄 [Read full license here](https://creativecommons.org/licenses/by-nc/4.0/)
+
+> For academic or research use, you are welcome to fork, modify, and reference this project. Attribution is required.
