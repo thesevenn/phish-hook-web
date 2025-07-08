@@ -15,13 +15,7 @@ A lightweight phishing email detection system using rule filters and ML techniqu
 
 ![Phishook Demo GIF showing an email scan and verdict](./docs/critical-demo.gif)
 
-### Phishook Web [Frontend] - A User-Friendly Interface for Email Analysis
-
----
-
-Built with _React_, _TypeScript_ and _TailwindCSS_, the Phishook web client offers a streamlined UI for interacting with the detection API — no setup needed. Just upload an email file and get instant analysis with visual verdicts.
-
-👉 Try it yourself at - 🔗 [**Phishook Web**](https://phishook.netlify.app)
+👉 Try it yourself at - 🔗 [**Phishook Web**](https://phishook.netlify.app). Just upload an email file and get instant analysis with visual verdicts.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/7ad93622-99f2-4f42-bcdc-5593eb538f13/deploy-status)](https://app.netlify.com/projects/phishook/deploys)
 
