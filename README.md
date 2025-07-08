@@ -2,28 +2,45 @@
 
 <div align="center"><h1>Phishook - Phishing Email Detection</h1></div>
 
-A lightweight phishing email detection system using rule filters and ML techniques. This user-facing web application lets the users interact with the 🔗 [Phishook Detection System](https://github.com/thesevenn/phishook-api.git) API built with Python + FastAPI. Users can upload an email and receive an instant analysis.
+<p align="center">
+  <img src="https://img.shields.io/badge/License-CC--BY--NC%204.0-blue.svg" />
+  <img src="https://img.shields.io/badge/Frontend-ReactJS-61DAFB?logo=react" />
+  <img src="https://img.shields.io/badge/TypeScript-%23007ACC?logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/TailwindCSS-%2338B2AC?logo=tailwindcss&logoColor=white" />
+  <img src="https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&logoColor=white" />
+  <img src="https://img.shields.io/badge/Python-ML-orange?logo=python&logoColor=white" />
+</p>
+
+A lightweight phishing email detection system using rule filters and ML techniques. Users can upload an email and receive an instant analysis using 🔗 [Phishook Detection](https://github.com/thesevenn/phishook-api.git) API built with Python + FastAPI.
 
 ![Phishook Demo GIF showing an email scan and verdict](./docs/critical-demo.gif)
 
-### Phishook Web - A User-Friendly Interface for Email Analysis
+### Phishook Web [Frontend] - A User-Friendly Interface for Email Analysis
 
 ---
 
-Built with React and TailwindCSS, the Phishook web client offers a streamlined UI for interacting with the detection API — no setup needed. Just upload an email file and get instant analysis with visual verdicts.
+Built with _React_, _TypeScript_ and _TailwindCSS_, the Phishook web client offers a streamlined UI for interacting with the detection API — no setup needed. Just upload an email file and get instant analysis with visual verdicts.
 
 👉 Try it yourself at - 🔗 [**Phishook Web**](https://phishook.netlify.app)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/7ad93622-99f2-4f42-bcdc-5593eb538f13/deploy-status)](https://app.netlify.com/projects/phishook/deploys)
 
-Learn more about the detection system by visiting the GitHub repo of the Phishook API above
-or 🔗 [here](https://github.com/thesevenn/phishook-api.git).
+## 📌 Description
 
-## ℹ️ Information
+Phishook applies a **layered, sequential approach** to detect phishing emails while minimizing latency and compute cost:
 
-This system is a Proof of Concept for the research paper I wrote on **Hybrid Sequential Approach Towards Email Phishing Detection using Rule based and Machine learning Techniques.**
+- **Rule-based filters** serve as a fast, deterministic pre-check using heuristics (e.g., suspicious URLs, brand impersonation keywords).
+- If confidence is low, the email is escalated to the **ML layer**, which refines the score but does **not override** the rule-based result — only adjusts it marginally based on ML confidence.
 
-<!-- 👉 Read the paper [here.](https://github.com/thesevenn/phishook-web.git/research.pdf) -->
+This hybrid pipeline enables faster results for obvious cases while preserving accuracy for edge cases.
+
+👉 Backend repo: [Phishook Detection API](https://github.com/thesevenn/phishook-api.git)
+
+## ℹ️ Project Information
+
+This system is a _Proof of Concept_ built as part of a capstone project titled **Hybrid Sequential Approach Towards Email Phishing Detection using Rule based and Machine learning Techniques.**
+
+<!-- 👉 Read the paper [here.](https://github.com/thesevenn/phishook-web.git/report.pdf) -->
 
 ## 📷 Screenshots
 
@@ -48,7 +65,7 @@ This system is a Proof of Concept for the research paper I wrote on **Hybrid Seq
 ### 🎯 Accuracy
 
 - Overall system accuracy: 93.6% (_combined Rule Filters + ML inference_)
-- Rule-based filter accuracy: 91.7% (\_Assuming uncertain cases are treated as incorrect)
+- Rule-based filter accuracy: 91.7% (_Assuming uncertain cases are treated as incorrect_)
 - ML model accuracy:
   - Email classifier: 99.9% (_trained and tested on a dataset of 40,000 emails_)
   - URL classifier: 91.3% (_trained and tested on 11,000+ URLs_)
@@ -65,30 +82,59 @@ This system is a Proof of Concept for the research paper I wrote on **Hybrid Seq
 
 ## 🪫 Limitations
 
-- Web service is running on minimal resources limiting performance
-- No WHOIS lookup is currently made to reduce response time
-- Email attachments are not analyzed in current setting
-- No Feedback loop to improve classification models
-- No Database is used to create and store caches
+- Minimal server resources → possible delays
+- No WHOIS lookup (skipped for speed)
+- Attachments not analyzed (project scope and resource limitation)
+- No model feedback or continual learning loop
+- No database or caching layer
+- Brand filters may over-trigger on generic terms (e.g., “Inc”, “Group”)
+
+## 📦 Dataset & Model Notes
+
+The ML models were trained primarily on:
+
+- Common phishing formats (e.g., fake receipts, order spam)
+- Legitimate marketing/newsletter content
+
+⚠️ **Caveats**:
+
+- Public datasets are biased toward newsletters due to privacy _(More on it later)_.
+- HTML-heavy, business-style emails with multiple links are harder to classify accurately.
+- Impersonation of known brands (Amazon, PayPal) is well-detected; generic phrasing less so.
+
+**Dataset Bias**: Most publicly available email datasets don’t reflect a typical inbox. Since emails are inherently private, the few datasets available tend to overrepresent newsletters — the only type commonly shared without privacy concerns.
 
 ## ⚙️ Technologies Used
 
-- ReactJS
+- React + TypeScript
 - Tailwind CSS
-- Shadcn UI Component Library
+- Shadcn UI
 - Vite
 - React Router
 - React Query
 
-## 🔭 Future Scope and Features
+### Backend
 
-- Adding feedback loop to utilize uploaded emails into improving classification models
-- Handling and analyzing attachments
-- More robust and verbose Filters result
-- Cached WHOIS lookup to add URL check but keep response time under limit.
-- Adding endpoints for only Rule or ML based analysis
+- Python + FastAPI
+- Machine Learning (custom email + URL classifiers)
+- Pandas, NumPy
+
+## 🔭 Roadmap
+
+- Add user feedback loop to improve models
+- Analyze attachments (e.g. `.zip`, `.pdf`)
+- Verbose rule filter output
+- Add WHOIS-based URL checks (cached)
+- Add endpoints for: `rule-only` and `ML-only` modes
 
 ## ⬇️ Installation and Setup
+
+### Prerequisites
+
+- NodeJS - [Install NodeJS](https://nodejs.org/en)
+- Python - [Install Python](https://www.python.org/downloads/)
+- Git (Optional) - [Install Git](https://git-scm.com/downloads)
+- Pnpm or npm (To run the React webapp)
 
 To install the web application locally, follow the steps.
 The React application was bootstrapped using VITE and pnpm.
@@ -109,10 +155,18 @@ pnpm run dev
 npm run dev
 ```
 
+Visit the app at [http://localhost:5173](http://localhost:5173)
+
 ## 📢 Disclaimer
 
-This tool provides automated analysis based on known phishing patterns and lightweight models. It is a proof of concept developed for academic purposes and is not intended as a full-fledged or enterprise-grade security solution. While it can help flag suspicious emails, no detection system is perfect. Mistakes can occur. Always use your
-judgment and verify critical communications independently before engaging with any email content.
+This project is not an enterprise-grade detection system. It’s an academic proof of concept based on known phishing patterns and lightweight models. No system is perfect — always verify suspicious emails manually.
+
+## 🖊️ Author
+
+**Aditya Raj Tripathi** _(Sevenn)_
+
+- Connect with me on [LinkedIn](https://linkedin.com/in/adityart)
+- Checkout other projects at [GitHub](https://github.com)
 
 ## 📝 License
 
