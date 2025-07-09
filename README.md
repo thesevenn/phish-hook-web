@@ -128,20 +128,40 @@ The ML models were trained primarily on:
 - NodeJS - [Install NodeJS](https://nodejs.org/en)
 - Python - [Install Python](https://www.python.org/downloads/)
 - Git (Optional) - [Install Git](https://git-scm.com/downloads)
-- Pnpm or npm (To run the React webapp)
+- Pnpm or npm (package manager)
 
+This React application was bootstrapped with Vite and uses pnpm.
 To install the web application locally, follow the steps.
-The React application was bootstrapped using VITE and pnpm.
+
+### Steps
+
+1. Clone repo and install dependencies
 
 ```bash
-git clone repo
-cd ./repo
+git clone https://github.com/thesevenn/phish-hook-web.git
+cd ./phish-hook-web
 pnpm install
 # or
 npm install
 ```
 
-To run the application locally -
+2. Create local .env file
+
+```bash
+touch .env.local
+```
+
+3. Add environment variables
+
+```bash
+ echo "VITE_API_KEY=API_KEY_FROM_BACKEND" > .env.local
+ echo "VITE_API_URL=BACKEND_API_URL" >> .env.local
+```
+
+> [!Note]
+> The `VITE_API_KEY` is exposed to the frontend intentionally — it's used only to prevent API abuse.
+
+4. To run the application locally -
 
 ```bash
 pnpm run dev
